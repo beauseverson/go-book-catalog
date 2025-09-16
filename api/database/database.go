@@ -11,8 +11,12 @@ import (
 
 var Client *mongo.Client
 
-func ConnectDB() {
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+func ConnectDB(uri string) {
+	if uri == "" {
+		log.Fatal("MONGODB_URI environment variable is not set")
+	}
+
+	clientOptions := options.Client().ApplyURI(uri)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -29,4 +33,15 @@ func ConnectDB() {
 	}
 
 	log.Println("Connected to MongoDB!")
+}
+
+func DisconnectDB() {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	if err := Client.Disconnect(ctx); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Disconnected from MongoDB!")
 }

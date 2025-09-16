@@ -13,8 +13,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-// var bookCollection *mongo.Collection = database.Client.Database("bookdb").Collection("books")
-
 func getBookCollection() *mongo.Collection {
 	return database.Client.Database("bookdb").Collection("books")
 }
@@ -57,6 +55,12 @@ func GetBooks() gin.HandlerFunc {
 
 		if err = cursor.All(ctx, &books); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error while decoding books"})
+			return
+		}
+
+		// check if books is empty and return an empty array instead of null
+		if len(books) == 0 {
+			c.JSON(http.StatusOK, []models.Book{})
 			return
 		}
 
