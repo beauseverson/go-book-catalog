@@ -1,3 +1,2 @@
-api: air ./api/air.toml
+api: cd api && air -c .air.toml
 ui: cd ui && npm run dev
-mongodb: brew services start mongodb-community@8.0
