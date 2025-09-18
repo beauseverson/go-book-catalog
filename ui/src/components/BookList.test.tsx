@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import BookList from './BookList';
 
