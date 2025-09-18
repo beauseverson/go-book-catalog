@@ -1,4 +1,3 @@
-import React from 'react';
 import BookList from './components/BookList';
 import './App.css'; // Optional: for styling
 
