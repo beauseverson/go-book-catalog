@@ -3,12 +3,9 @@ package main
 import (
 	"go-book-catalog/database"
 	"go-book-catalog/routes"
-	"log"
-	"os"
-
+	"go-book-catalog/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func setupRouter() *gin.Engine {
@@ -31,20 +28,11 @@ func setupRouter() *gin.Engine {
 	return router
 }
 
-func getEnvVar(key string) string {
-	// Load .env file
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
 
-	// Return the value of the environment variable or an empty string if not found
-	return os.Getenv(key)
-}
 
 func main() {
 	// Connect to the database
-	database.ConnectDB(getEnvVar("MONGODB_URI"))
+	database.ConnectDB(utils.GetEnvVar("MONGODB_URI"))
 
 	// Initialize default Gin Router
 	router := setupRouter()
